@@ -13,9 +13,8 @@ import { TableComponent } from './table/table.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    LatLongComponent,
-    TableComponent
+    AppComponent
+   
   ],
   imports: [
     BrowserModule,

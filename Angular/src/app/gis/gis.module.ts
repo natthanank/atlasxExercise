@@ -15,12 +15,12 @@ import { LatLongComponent } from '../lat-long/lat-long.component';
 @NgModule({
   imports: [
     CommonModule,
-    GisRoutingModule,
-    TableComponent,
-    LatLongComponent
+    GisRoutingModule
   ],
   declarations: [
-    GisComponent
+    GisComponent,
+    TableComponent,
+    LatLongComponent
   ],
   providers: [
     GisService,

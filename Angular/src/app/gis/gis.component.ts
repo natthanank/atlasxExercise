@@ -4,8 +4,6 @@ import { loadModules } from 'esri-loader';
 import { GisService } from './gis.service';
 import { dojoConfig } from './config/dojo';
 
-import { AppService } from '../app-base/app.service';
-import { STRING_TYPE } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-gis',
@@ -123,10 +121,11 @@ export class GisComponent implements OnInit {
     this.resultList[index][3].rings.forEach(ring => {
       this.polygon.addRing(ring);
     });
-    this.gisService.map.centerAndZoom(this.polygon.getCentroid(), 9);
+    this.gisService.map.centerAndZoom(this.polygon.getCentroid(), 5);
     this.graphic.setGeometry(this.polygon);
     this.graphic.setSymbol(this.fillSymbol);
     this.gisService.map.graphics.add(this.graphic);
+    console.log(this.eleMap.nativeElement);
   }
 
   trackByFn(index, item) {

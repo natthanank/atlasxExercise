@@ -4,8 +4,8 @@ Longitude: <input type="text" value="101.4901" #longi /><br/>
 <button (click)="getLaLong(lati.value, longi.value)">Click Si Ja</button>
 
 <div style="width: 100%; height: 500px;" #eleMap></div>
-<table *ngIf="resultList.length" border="1">
-    <tr>
+<table *ngIf="resultList" border="1">
+    <tr *ngIf="resultList.length">
         <th>SUB_REGION</th>
         <th>STATE_NAME</th>
         <th>STATE_ABBR</th>
