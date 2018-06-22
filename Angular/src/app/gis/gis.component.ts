@@ -63,7 +63,6 @@ export class GisComponent implements OnInit {
         this.featureLayer = new FeatureLayer("https://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Demographics/ESRI_Census_USA/MapServer/5");
         this.gisService.map.addLayer(dynamicLayerUrl);
         this.gisService.map.addLayer(this.featureLayer);
-        this.gisService.map.on('click', this.onMapClick);
         this.markerSymbol = new SimpleMarkerSymbol();
         this.markerSymbol.setColor(new Color("#00FFFF"));
         this.markerSymbol.setSize("10");
@@ -106,10 +105,6 @@ export class GisComponent implements OnInit {
     console.log(map);
   }
 
-  onMapClick(event) {
-    console.log(event.offsetX);
-    console.log(event.offsetY);
-  }
 
   getLaLong(latitude: number, longitude: number) {
     this.point.setLatitude(latitude);
