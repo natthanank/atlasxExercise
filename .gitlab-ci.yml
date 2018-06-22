@@ -1,0 +1,11 @@
+stages:
+  - build
+  
+build:
+  stage: build
+  script:
+  # - powershell.exe .\deploy.ps1 
+  tags:
+   - windows
+  only:
+   - master
