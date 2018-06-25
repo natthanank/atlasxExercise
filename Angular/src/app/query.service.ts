@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { GisService } from './gis/gis.service';
 import { loadModules } from 'esri-loader';
 import { dojoConfig } from './gis/config/dojo';
 
@@ -9,7 +8,7 @@ export class QueryService {
 
   resultList = [];
 
-  constructor(private gisService: GisService) { }
+  constructor() { }
 
   query(): Array<Array<string>> {
     const options = {

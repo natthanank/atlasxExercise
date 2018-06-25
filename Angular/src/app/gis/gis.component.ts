@@ -111,7 +111,7 @@ export class GisComponent implements OnInit {
     this.gisService.map.graphics.add(this.graphic);
   }
 
-  trackByFn(index, item) {
+  trackByFn(index) {
     return index;
   }
 

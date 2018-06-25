@@ -10,6 +10,7 @@ import { ProjectionUtilService } from './services/projection-util.service';
 
 import { TableComponent } from '../table/table.component';
 import { LatLongComponent } from '../lat-long/lat-long.component';
+import { QueryService } from '../query.service';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { LatLongComponent } from '../lat-long/lat-long.component';
     GisService,
     EsriConfigService,
     GeometryUtilService,
-    ProjectionUtilService
+    ProjectionUtilService,
+    QueryService
   ]
 })
 export class GisModule { }
