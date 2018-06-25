@@ -29,7 +29,6 @@ export class GisComponent implements OnInit {
     const options = {
       dojoConfig: dojoConfig
     };
-    console.log("edited");
     loadModules(['esri/map', 'esri/layers/ArcGISDynamicMapServiceLayer',
                 'esri/graphic', 'esri/symbols/SimpleMarkerSymbol',
                 'esri/Color', 'esri/geometry/Point',
@@ -104,9 +103,13 @@ export class GisComponent implements OnInit {
   }
 
 
-  getLaLong(latitude: number, longitude: number) {
-    this.point.setLatitude(latitude);
-    this.point.setLongitude(longitude);
+  onGetLaLong(lalong) {
+    this.point.setLatitude(lalong[0]);
+    this.point.setLongitude(lalong[1]);
+    this.zoom();
+  }
+
+  zoom(){
     this.gisService.map.centerAndZoom(this.point, 12);
     this.graphic.setGeometry(this.point);
     this.graphic.setSymbol(this.markerSymbol);
@@ -115,7 +118,6 @@ export class GisComponent implements OnInit {
 
   onRowClick(index: number) {
     for (let i = 0; i < this.polygon.rings.length; i++) {
-      console.log(i);
       this.polygon.removeRing(i);
     }
     this.resultList[index][3].rings.forEach(ring => {
@@ -125,7 +127,6 @@ export class GisComponent implements OnInit {
     this.graphic.setGeometry(this.polygon);
     this.graphic.setSymbol(this.fillSymbol);
     this.gisService.map.graphics.add(this.graphic);
-    console.log(this.eleMap.nativeElement);
   }
 
   trackByFn(index, item) {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-lat-long',
@@ -7,9 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LatLongComponent implements OnInit {
 
+  @Output() lalong = new EventEmitter<Array<number>>();
+ 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  getLaLong(lalong) {
+    console.log("in Get Lat Long : " + lalong[0] + " " + lalong[1]);
+    this.lalong.emit(lalong);
   }
 
 }

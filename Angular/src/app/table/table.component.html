@@ -1,3 +1,12 @@
-<p>
-  table works!
-</p>
+<table *ngIf="resultList" border="1">
+  <tr *ngIf="resultList.length">
+      <th>SUB_REGION</th>
+      <th>STATE_NAME</th>
+      <th>STATE_ABBR</th>
+  </tr>
+  <tr *ngFor="let result of resultList; let index=index; trackBy: trackByFn;" (click)="rowClick(index)">
+      <td>{{ result[0] }}</td>
+      <td>{{ result[1] }}</td>
+      <td>{{ result[2] }}</td>
+  </tr>
+</table>
