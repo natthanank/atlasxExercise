@@ -1,6 +1,4 @@
 <button routerLink="/">กลับหน้าเลือกระบบ</button><br/>
 <app-lat-long (lalong)="onGetLaLong($event)"></app-lat-long>
-
 <div style="width: 100%; height: 500px;" #eleMap></div>
-
 <app-table [resultList] = "resultList" (index)="onRowClick($event)"></app-table>
