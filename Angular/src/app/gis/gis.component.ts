@@ -4,6 +4,8 @@ import { loadModules } from 'esri-loader';
 import { GisService } from './gis.service';
 import { dojoConfig } from './config/dojo';
 
+import { QueryService } from '../query.service';
+
 
 @Component({
   selector: 'app-gis',
@@ -23,7 +25,8 @@ export class GisComponent implements OnInit {
   polygon;
   fillSymbol;
 
-  constructor(private gisService: GisService) { }
+  constructor(private gisService: GisService,
+            private queryService: QueryService) { }
 
   ngOnInit() {
     const options = {
@@ -32,65 +35,44 @@ export class GisComponent implements OnInit {
     loadModules(['esri/map', 'esri/layers/ArcGISDynamicMapServiceLayer',
                 'esri/graphic', 'esri/symbols/SimpleMarkerSymbol',
                 'esri/Color', 'esri/geometry/Point',
-                'esri/layers/FeatureLayer', 'esri/tasks/query',
-                'esri/tasks/QueryTask', 'esri/urlUtils', 'esri/config',
+                'esri/layers/FeatureLayer', 'esri/urlUtils', 'esri/config',
                 'esri/geometry/Polygon', 'esri/symbols/SimpleFillSymbol'
               ], options)
       .then(([Map, ArcGISDynamicMapServiceLayer,
             Graphic, SimpleMarkerSymbol,
             Color, Point,
-            FeatureLayer, Query,
-            QueryTask, UrlUtils, esriConfig, Polygon,
+            FeatureLayer, UrlUtils, esriConfig, Polygon,
             SimpleFillSymbol]) => {
               
               UrlUtils.addProxyRule({
                 proxyUrl: esriConfig.defaults.io.proxyUrl,
                 urlPrefix: 'https://sampleserver1.arcgisonline.com'
               });
-        // you can now create a new FlareClusterLayer and add it to a new Map
-        this.gisService.map = new Map(this.eleMap.nativeElement, {
-          center: [-118, 34.5],
-          zoom: 5,
-          basemap: 'topo'
-        });
-        let dynamicLayerUrl = new ArcGISDynamicMapServiceLayer("https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer", {
-          "id": "censusLayer",
-          "opacity": 0.75
-        });
-        this.featureLayer = new FeatureLayer("https://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Demographics/ESRI_Census_USA/MapServer/5");
-        this.gisService.map.addLayer(dynamicLayerUrl);
-        this.gisService.map.addLayer(this.featureLayer);
-        this.markerSymbol = new SimpleMarkerSymbol();
-        this.markerSymbol.setColor(new Color("#00FFFF"));
-        this.markerSymbol.setSize("10");
-        this.graphic = new Graphic();
-        this.point = new Point();
-        this.resultList = [];
-        this.polygon = new Polygon();
-        this.fillSymbol = new SimpleFillSymbol();
-        this.markerSymbol.setColor(new Color("#00FFFF"));
+          // you can now create a new FlareClusterLayer and add it to a new Map
+          this.gisService.map = new Map(this.eleMap.nativeElement, {
+            center: [-118, 34.5],
+            zoom: 5,
+            basemap: 'topo'
+          });
+          let dynamicLayerUrl = new ArcGISDynamicMapServiceLayer("https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer", {
+            "id": "censusLayer",
+            "opacity": 0.75
+          });
+          this.featureLayer = new FeatureLayer("https://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Demographics/ESRI_Census_USA/MapServer/5");
+          this.gisService.map.addLayer(dynamicLayerUrl);
+          this.gisService.map.addLayer(this.featureLayer);
+          this.markerSymbol = new SimpleMarkerSymbol();
+          this.markerSymbol.setColor(new Color("#00FFFF"));
+          this.markerSymbol.setSize("10");
+          this.graphic = new Graphic();
+          this.point = new Point();
+          this.resultList = [];
+          this.polygon = new Polygon();
+          this.fillSymbol = new SimpleFillSymbol();
+          this.markerSymbol.setColor(new Color("#00FFFF"));
 
 
-        // query
-        let queryTask = new QueryTask("https://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Demographics/ESRI_Census_USA/MapServer/5");
-
-        let query = new Query();
-        query.returnGeometry = true;
-        query.outFields = [
-          "SUB_REGION", "STATE_NAME", "STATE_ABBR",
-        ];
-        query.where = "1=1";
-        queryTask.execute(query, (results) => {
-          let resultCount = results.features.length;
-          for (let i = 0; i < resultCount; i++) {
-            let featureAttributes = results.features[i].attributes;
-            const result = [];
-            for (let attr in featureAttributes) {
-              result.push(featureAttributes[attr]);
-            }
-            result.push(results.features[i].geometry);
-            this.resultList.push(result);
-        }});
+          this.resultList = this.queryService.query();
       })
       .catch(err => {
         // handle any errors
